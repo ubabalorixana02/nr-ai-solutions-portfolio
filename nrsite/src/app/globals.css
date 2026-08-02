@@ -1,0 +1,244 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-cormorant: 'Cormorant Garamond', serif;
+  --font-jost: 'Jost', sans-serif;
+
+  /* Light mode (default) design tokens.
+     RGB-triplet format (no "rgb()" wrapper, no commas) is required for the
+     two alpha-capable ones — Tailwind's `rgb(var(--x) / <alpha-value>)`
+     pattern is what makes utilities like bg-cream/90 work with a
+     CSS-variable-backed color. The rest are plain hex since nothing in the
+     codebase applies an opacity modifier to them. */
+  --color-cream-rgb: 255 249 246;      /* page background */
+  --color-heading-rgb: 22 58 112;      /* headings — was hardcoded navy */
+  --color-surface: #F6E4EB;            /* alternating section background */
+  --color-card: #FFFFFF;               /* card / elevated surface background */
+  --color-mid: #6B5B57;                /* body text */
+  --color-rosePale: #F1DDE3;           /* chip backgrounds, card borders */
+  --color-roseText: #723B4A;           /* small accent text/links — darkened
+                                           from brand rose so it clears
+                                           WCAG AA on light backgrounds */
+}
+
+.dark {
+  --color-cream-rgb: 15 27 51;         /* #0F1B33 */
+  --color-heading-rgb: 244 241 238;    /* #F4F1EE */
+  --color-surface: #16264A;
+  --color-card: #1C2F58;
+  --color-mid: #B7C1D9;
+  --color-rosePale: #2A3A63;
+  --color-roseText: #F0A8BC;           /* lightened so it clears AA on dark
+                                           backgrounds — the light-mode value
+                                           would nearly disappear here */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background-color: rgb(var(--color-cream-rgb));
+  color: #222222;
+  font-family: var(--font-jost);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.dark body {
+  color: #EDEFF5;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: var(--font-cormorant);
+}
+
+/* Visible, on-brand focus ring for keyboard users. Browser default outlines
+   are inconsistent across browsers and hard to see on some of our button
+   backgrounds — this keeps focus clearly visible everywhere, but only for
+   keyboard navigation (not on mouse click), via :focus-visible. */
+:focus-visible {
+  outline: 2.5px solid #163A70;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.dark :focus-visible {
+  /* Navy would nearly vanish against our dark backgrounds — swap to the
+     light accent color used elsewhere in dark mode. */
+  outline-color: #F0A8BC;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  z-index: 1000;
+  background: #163A70;
+  color: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 10px 0;
+  font-size: 0.85rem;
+  text-decoration: none;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+.section-tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-roseText);
+  font-weight: 500;
+}
+
+.section-title {
+  font-family: var(--font-cormorant);
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  color: rgb(var(--color-heading-rgb));
+  margin-top: 0.4rem;
+}
+
+.section-title em {
+  color: var(--color-roseText);
+  font-style: normal;
+}
+
+.divider {
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #163A70, #C97A8C);
+  border-radius: 4px;
+  margin: 1.2rem 0 2rem;
+}
+
+.btn-solid {
+  background: #163A70;
+  color: white;
+  padding: 0.85rem 1.8rem;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 8px 24px rgba(22, 58, 112, 0.18);
+  transition: all .25s ease;
+  border: none;
+  cursor: pointer;
+}
+.btn-solid:hover {
+  background: #8E4A5D;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(22, 58, 112, 0.18), 0 0 20px rgba(201, 122, 140, 0.35);
+}
+
+.btn-ghost {
+  background: var(--color-card);
+  color: rgb(var(--color-heading-rgb));
+  border: 1.5px solid rgb(var(--color-heading-rgb));
+  padding: 0.85rem 1.8rem;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all .25s ease;
+  cursor: pointer;
+}
+.btn-ghost:hover {
+  background: rgb(var(--color-heading-rgb));
+  color: var(--color-card);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(22, 58, 112, 0.12), 0 0 20px rgba(201, 122, 140, 0.25);
+}
+
+.card {
+  background: var(--color-card);
+  border-radius: 16px;
+  border: 1px solid var(--color-rosePale);
+  transition: transform .3s, box-shadow .3s, background-color .25s ease, border-color .25s ease;
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 40px rgba(160, 90, 80, 0.14);
+}
+
+/* Opt-in — not every card wants this (certificates/skills stay understated),
+   but service and project cards get a soft colour-matched glow on hover for
+   a touch more "alive" feeling. */
+.card-glow:hover {
+  box-shadow: 0 18px 40px rgba(160, 90, 80, 0.14), 0 0 0 1px rgba(201, 122, 140, 0.35), 0 0 24px rgba(201, 122, 140, 0.25);
+}
+
+.legal-content h2 {
+  font-family: var(--font-cormorant);
+  font-size: 1.5rem;
+  color: rgb(var(--color-heading-rgb));
+  margin-bottom: 0.75rem;
+}
+.legal-content h3 {
+  font-family: var(--font-jost);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--color-roseText);
+  margin: 1.25rem 0 0.4rem;
+}
+.legal-content p {
+  font-size: 0.9rem;
+  line-height: 1.75;
+  color: var(--color-mid);
+  margin-bottom: 0.75rem;
+}
+.legal-content ul {
+  margin: 0.5rem 0 0.75rem 1.25rem;
+  list-style: disc;
+}
+.legal-content li {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--color-mid);
+  margin-bottom: 0.35rem;
+}
+.legal-content a {
+  color: var(--color-roseText);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.legal-content strong {
+  color: rgb(var(--color-heading-rgb));
+  font-weight: 600;
+}
