@@ -13,6 +13,7 @@ import { COMPANY_NAME } from "@/lib/site";
 const links = [
   { href: "/#about", label: "About", hash: "about" },
   { href: "/#services", label: "Services", hash: "services" },
+  { href: "/recruitment", label: "Recruitment & Talent" },
   { href: "/#experience", label: "Experience", hash: "experience" },
   { href: "/projects", label: "Projects" },
   { href: "/#certifications", label: "Certifications", hash: "certifications" },
@@ -166,3 +167,4 @@ export default function Navbar() {
     </nav>
   );
 }
+
