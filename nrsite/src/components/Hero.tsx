@@ -1,13 +1,10 @@
 "use client";
 
-import { resumes } from "@/lib/documents";
-import PdfLinkButton from "./PdfLinkButton";
 import Link from "next/link";
 import Image from "next/image";
-import RotatingTitle from "./RotatingTitle";
 import { motion, useReducedMotion } from "framer-motion";
-import logoMark from "../../public/brand/logo-mark.png";
-import { SITE_ROLES, SITE_DESCRIPTION } from "@/lib/site";
+import logoFull from "../../public/brand/logo-full.png";
+import { COMPANY_NAME, COMPANY_TAGLINE } from "@/lib/site";
 
 export default function Hero() {
   const shouldReduceMotion = useReducedMotion();
@@ -19,26 +16,20 @@ export default function Hero() {
         animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
       >
-        <p className="section-tag">South Africa · Remote / Hybrid / On-site</p>
-        <h1 className="mt-3 font-display text-4xl leading-tight text-heading md:text-6xl">
-          Hello, I&apos;m <span className="text-roseText">Nolubabalo Rixana</span>
+        <p className="section-tag">South Africa-based · Supporting clients internationally</p>
+        <h1 className="mt-3 font-display text-4xl uppercase leading-tight text-heading md:text-6xl">
+          {COMPANY_TAGLINE}
         </h1>
-        <RotatingTitle titles={[...SITE_ROLES]} />
-        {/* Single accessible source of truth for the rotating titles above,
-            which are aria-hidden since they're a purely decorative flourish. */}
-        <span className="sr-only">{SITE_ROLES.join(" · ")}</span>
-        <p className="mt-5 max-w-lg text-[0.95rem] leading-relaxed text-mid">{SITE_DESCRIPTION}</p>
+        <p className="mt-3 max-w-lg font-display text-xl text-roseText md:text-2xl">
+          The operational support behind ambitious businesses.
+        </p>
+        <p className="mt-5 max-w-lg text-[0.95rem] leading-relaxed text-mid">
+          Administrative support. Customer experience. Recruitment coordination. Smarter workflows.
+        </p>
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <PdfLinkButton file={resumes[0].file} name={resumes[0].name} className="btn-solid">
-            ⬇ {resumes[0].label}
-          </PdfLinkButton>
-          <PdfLinkButton file={resumes[1].file} name={resumes[1].name} className="btn-ghost">
-            📄 {resumes[1].label}
-          </PdfLinkButton>
-          <Link href="/#contact" className="btn-ghost">Hire Me</Link>
-          <Link href="/consultation" className="btn-ghost">Book Consultation</Link>
-          <Link href="/projects" className="btn-ghost">View Projects</Link>
+          <Link href="/consultation" className="btn-solid">Work With Us</Link>
+          <Link href="/#services" className="btn-ghost">Explore Services</Link>
         </div>
       </motion.div>
 
@@ -68,30 +59,21 @@ export default function Hero() {
         {/* Fixed-light medallion behind the logo — its navy ink would
             blend into a dark page background otherwise, same issue as the
             footer chip above. This one stays light in both themes on
-            purpose, like a printed seal. */}
+            purpose, like a printed seal.
+            Sized larger than the logo box below (previously smaller, which
+            let the logo overflow its backing and look cramped) so the full
+            NR AI Solutions lockup has visible breathing room around it. */}
         <div
           aria-hidden="true"
-          className="absolute h-60 w-60 rounded-full bg-[#FFF9F6] shadow-inner md:h-72 md:w-72"
+          className="absolute h-72 w-72 rounded-full bg-[#FFF9F6] shadow-inner md:h-[21rem] md:w-[21rem]"
         />
 
         <Image
-          src={logoMark}
-          alt="Nolubabalo Rixana — NR monogram logo"
+          src={logoFull}
+          alt={`${COMPANY_NAME} logo`}
           priority
           className="relative h-64 w-64 object-contain drop-shadow-xl md:h-80 md:w-80"
         />
-
-        {/* Floating status badge — a small fixed-light chip (like the
-            medallion above), so it stays legible regardless of theme rather
-            than trying to track the page background. */}
-        <motion.div
-          className="absolute bottom-6 left-0 flex items-center gap-2 rounded-full bg-[#FFF9F6] px-4 py-2.5 text-xs font-medium text-navy shadow-lg md:bottom-10 md:left-4"
-          animate={shouldReduceMotion ? undefined : { y: [0, -8, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <span aria-hidden="true" className="h-2 w-2 rounded-full bg-emerald-500" />
-          Available for new projects
-        </motion.div>
       </motion.div>
     </section>
   );

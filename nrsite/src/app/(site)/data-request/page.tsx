@@ -44,7 +44,7 @@ export default function DataRequestPage() {
       <section>
         <h2>How to Submit a Request</h2>
         <p>
-          Email <a href="mailto:ubabalorixana02@gmail.com">ubabalorixana02@gmail.com</a>{" "}
+          Email <a href="mailto:nolubabalo@nraisolutions.co.za">nolubabalo@nraisolutions.co.za</a>{" "}
           with the subject line "Data Request," stating which of the above you'd like and
           any details that help identify your submission (e.g. the name/email you used
           when contacting the site, or the approximate date of a testimonial submission).

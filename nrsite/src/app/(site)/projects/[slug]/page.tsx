@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { Metadata } from "next";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, COMPANY_NAME } from "@/lib/site";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Reveal from "@/components/Reveal";
 
@@ -20,7 +20,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
     description: project.summary,
     alternates: { canonical: url },
     openGraph: {
-      title: `${project.title} — Case Study | Nolubabalo Rixana`,
+      title: `${project.title} — Case Study | ${COMPANY_NAME}`,
       description: project.summary,
       url,
       type: "article",

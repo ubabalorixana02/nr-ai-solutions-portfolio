@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Wrench } from "lucide-react";
 import logoMark from "../../../public/brand/logo-mark.png";
+import { COMPANY_NAME } from "@/lib/site";
 
 // Standalone on purpose — no Navbar/Footer here, since if the site is in
 // maintenance mode, nav links pointing at pages that might currently be
@@ -11,7 +12,7 @@ export default function MaintenancePage() {
     <main className="flex min-h-screen flex-col items-center justify-center bg-cream px-6 py-20 text-center md:px-12">
       <div className="relative flex h-40 w-40 items-center justify-center">
         <div aria-hidden="true" className="absolute h-40 w-40 rounded-full bg-[#FFF9F6] shadow-inner" />
-        <Image src={logoMark} alt="Nolubabalo Rixana" className="relative h-28 w-28 object-contain" />
+        <Image src={logoMark} alt={COMPANY_NAME} className="relative h-28 w-28 object-contain" />
       </div>
 
       <Wrench size={22} className="mt-6 text-rose" aria-hidden="true" />
@@ -21,7 +22,7 @@ export default function MaintenancePage() {
         for your patience.
       </p>
 
-      <a href="mailto:ubabalorixana02@gmail.com" className="btn-solid mt-8">
+      <a href="mailto:nolubabalo@nraisolutions.co.za" className="btn-solid mt-8">
         Email Me Directly
       </a>
     </main>

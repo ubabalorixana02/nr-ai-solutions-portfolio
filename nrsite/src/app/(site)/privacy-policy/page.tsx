@@ -181,7 +181,7 @@ export default function PrivacyPolicy() {
         <h2>8. Contact Details</h2>
         <p>
           For any privacy-related question or request, contact Nolubabalo Rixana at{" "}
-          <a href="mailto:ubabalorixana02@gmail.com">ubabalorixana02@gmail.com</a>.
+          <a href="mailto:nolubabalo@nraisolutions.co.za">nolubabalo@nraisolutions.co.za</a>.
         </p>
       </section>
 

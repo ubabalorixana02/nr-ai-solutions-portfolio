@@ -1,10 +1,18 @@
 import { Target, Users, Sparkles, TrendingUp, Heart } from "lucide-react";
+import Image from "next/image";
 import Reveal from "./Reveal";
+import founderPhoto from "../../public/founder/nolubabalo-rixana.png";
+import { COMPANY_NAME, FOUNDER_NAME, FOUNDER_TITLE } from "@/lib/site";
+
+// Lead founder quote, styled distinctly from the paragraphs below — kept
+// separate from `paragraphs` (rather than being item 0) so it can carry
+// its own pull-quote styling without changing how the rest render.
+const founderQuote =
+  "I built NR AI Solutions around a simple idea: businesses shouldn't have to choose between reliable human support and smarter technology.";
 
 const paragraphs = [
-  "Hi, I'm Nolubabalo Rixana—a detail-oriented Virtual Assistant, Administrative Professional, and AI Productivity Specialist with a passion for helping businesses simplify their operations and work more efficiently.",
-  "I combine strong administrative expertise with modern AI tools and workflow automation to help entrepreneurs, startups, and growing businesses save time, improve productivity, and stay organised. Whether it's streamlining everyday tasks, designing websites, supporting customers, managing business operations, or creating intelligent AI solutions, I enjoy building systems that make work easier.",
-  "Currently completing my Bachelor of Arts in Government, Administration and Development at the University of South Africa (UNISA), I continuously invest in expanding my knowledge through professional certifications in customer service, virtual assistance, workplace safety, Microsoft technologies, and AI productivity.",
+  "NR AI Solutions helps growing businesses stay organised, responsive and efficient — combining administrative and operations support, customer support, recruitment coordination and practical automation into one dependable service.",
+  "I hold a Bachelor of Arts in Government, Administration and Development from the University of South Africa (UNISA), and I continuously invest in expanding my knowledge through professional certifications in customer service, virtual assistance, workplace safety, Microsoft technologies, and AI productivity.",
   "What sets me apart is my curiosity and willingness to learn. I enjoy exploring emerging technologies, experimenting with automation tools, and turning ideas into practical solutions. Every project I work on is approached with professionalism, creativity, and a commitment to delivering meaningful results.",
   "Outside of work, I enjoy nature, lifelong learning, and discovering new ways technology can empower people and businesses. I believe great systems create more time for what matters most—and that's exactly what I strive to build for every client.",
 ];
@@ -22,22 +30,49 @@ export default function About() {
   return (
     <section id="about" className="px-6 py-24 md:px-12">
       <Reveal>
-        <p className="section-tag">Get to Know Me</p>
-        <h2 className="section-title">
-          Who I <em>Am</em>
-        </h2>
+        <p className="section-tag">Meet the Founder</p>
+        <h2 className="section-title">{FOUNDER_NAME}</h2>
+        <p className="mt-1 text-sm font-medium uppercase tracking-[0.15em] text-roseText">
+          {FOUNDER_TITLE}, {COMPANY_NAME}
+        </p>
         <div className="divider" />
       </Reveal>
 
-      <Reveal>
-        <div className="max-w-3xl space-y-4">
-          {paragraphs.map((p, i) => (
-            <p key={i} className="text-[0.95rem] leading-relaxed text-mid">
-              {p}
+      <div className="grid gap-10 md:grid-cols-[1.3fr_1fr] md:items-start">
+        <div className="order-2 md:order-1">
+          <Reveal>
+            <p className="max-w-3xl font-display text-xl italic leading-snug text-heading md:text-2xl">
+              &ldquo;{founderQuote}&rdquo;
             </p>
-          ))}
+          </Reveal>
+
+          <Reveal>
+            <div className="mt-6 max-w-3xl space-y-4">
+              {paragraphs.map((p, i) => (
+                <p key={i} className="text-[0.95rem] leading-relaxed text-mid">
+                  {p}
+                </p>
+              ))}
+            </div>
+          </Reveal>
         </div>
-      </Reveal>
+
+        {/* Authentic founder photograph — a soft offset card behind it for
+            depth, matching the site's existing "light backing" pattern
+            (see Hero/Footer logo chips) without reusing the logo's own
+            circular motif. Ordered before the biography text on mobile
+            (order-1) so the photo appears near the name/title rather than
+            after the full bio; desktop keeps its side-by-side placement
+            via md:order-2, unaffected by this. */}
+        <Reveal className="relative order-1 mx-auto w-full max-w-xs md:order-2 md:mx-0 md:max-w-none">
+          <div aria-hidden="true" className="absolute -right-3 -top-3 hidden h-full w-full rounded-3xl bg-rosePale md:block" />
+          <Image
+            src={founderPhoto}
+            alt={`${FOUNDER_NAME}, ${FOUNDER_TITLE} at ${COMPANY_NAME}`}
+            className="relative w-full rounded-3xl object-cover shadow-xl"
+          />
+        </Reveal>
+      </div>
 
       <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {highlights.map((h, i) => (
@@ -54,27 +89,26 @@ export default function About() {
               <Target size={26} className="text-roseText" aria-hidden="true" />
             </span>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-roseText">My Mission</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-roseText">Our Mission</p>
               <span className="mt-1 block h-0.5 w-10 bg-rose" aria-hidden="true" />
             </div>
           </div>
 
           <div className="mt-8 grid gap-8 md:grid-cols-2 md:gap-10">
             <p className="font-display text-2xl leading-snug text-heading md:text-[1.75rem]">
-              Empowering businesses through{" "}
-              <span className="italic text-roseText">smart systems</span>,{" "}
-              <span className="italic text-roseText">AI</span>, and{" "}
-              <span className="italic text-roseText">meaningful human support</span>.
+              <span className="italic text-roseText">NR AI Solutions</span> combines reliable
+              human support with <span className="italic text-roseText">practical automation</span> to
+              help businesses stay organised, responsive and efficient.
             </p>
 
             <div className="space-y-4 border-rosePale text-sm leading-relaxed text-mid md:border-l md:pl-10">
               <p>
-                My mission is to help businesses embrace smarter ways of working through
-                reliable administrative support, AI-powered solutions, and thoughtful digital
-                experiences.
+                NR AI Solutions exists to help businesses embrace smarter ways of working —
+                through reliable administrative support, AI-powered solutions, and thoughtful
+                digital experiences.
               </p>
               <p>
-                I believe technology should simplify work, not complicate it — creating more
+                We believe technology should simplify work, not complicate it — creating more
                 time for growth, creativity, and impact.
               </p>
             </div>
@@ -82,10 +116,10 @@ export default function About() {
 
           <div className="mt-10 grid gap-6 border-t border-rosePale pt-8 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: Users, title: "People First", desc: "I value relationships, trust, and clear communication." },
-              { icon: Sparkles, title: "Smarter Work", desc: "I use AI and automation to save time and eliminate busywork." },
-              { icon: TrendingUp, title: "Continuous Growth", desc: "I am committed to learning, adapting, and improving every single day." },
-              { icon: Heart, title: "Meaningful Impact", desc: "I care about helping people and businesses achieve their goals." },
+              { icon: Users, title: "People First", desc: "We value relationships, trust, and clear communication." },
+              { icon: Sparkles, title: "Smarter Work", desc: "NR AI Solutions uses automation and AI to save time and eliminate busywork." },
+              { icon: TrendingUp, title: "Continuous Growth", desc: "We are committed to learning, adapting, and improving every single day." },
+              { icon: Heart, title: "Meaningful Impact", desc: "We care about helping people and businesses achieve their goals." },
             ].map((pillar) => (
               <div key={pillar.title} className="text-center">
                 <span className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-rose/15">

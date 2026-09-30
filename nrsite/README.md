@@ -97,13 +97,19 @@ When someone submits a review, it lands in `/studio` → **Testimonial** with St
 legitimate, change Status to "✅ Approved" and publish. It'll appear on the homepage within
 about a minute. Spam submissions can just be deleted.
 
-## Contact & Consultation setup (Google Forms + Calendar)
+## Contact, Quote & Consultation setup (Google Forms + Calendar)
 
-Both of these are embedded via a plain iframe pointing at something you create in your
-own Google account (`ubabalorixana02@gmail.com` or whichever you use) — no API keys, no
-third-party service, no code changes needed once they're set up.
+All three are embedded via a plain iframe (or opened via link, for Contact) pointing at
+something you create in your own Google account (`ubabalorixana02@gmail.com` or whichever
+you use) — no API keys, no third-party service, no code changes needed once set up.
 
 ### Contact form
+
+The "Contact Me" button on the homepage opens a **privacy consent modal** first — it
+explains that continuing will open a Google Form and links to the Privacy Policy. Only
+after someone clicks "Continue to Contact Form" does the form open (in a new tab). This
+is intentional: visitors are told what happens before anything loads, not redirected
+silently.
 
 1. Go to [forms.google.com](https://forms.google.com) and build a form with your contact
    fields (Name, Email, Company, Subject, Message).
@@ -112,9 +118,29 @@ third-party service, no code changes needed once they're set up.
    inbox — it's a native Forms feature, nothing extra to build or configure.
 3. Click **Send → the `<>` (embed) tab** → copy the `src="..."` URL out of the `<iframe>`
    snippet it gives you → paste it into `NEXT_PUBLIC_GOOGLE_CONTACT_FORM_URL` in
-   `.env.local`.
+   `.env.local`. (The direct/non-embed form URL also works fine here, since this one opens
+   in a new tab rather than embedding.)
+
+### Quote request form
+
+A **separate** form from the contact one, at `/quote` — collects project-specific fields
+so you have enough detail to prepare a quotation: Full Name, Business/Company Name,
+Email, Service Required, Project Description, Preferred Timeline, Estimated Budget Range,
+Preferred Contact Method, Additional Information.
+
+Same setup as the contact form: build it in Google Forms with those fields, turn on
+email notifications, copy the embed URL into `NEXT_PUBLIC_GOOGLE_QUOTE_FORM_URL`.
+
+Google's own embedded confirmation ("Your response has been recorded") shows inside the
+form itself after submission — the page around it also carries the "your request has
+been received" messaging, but that surrounding text is static (there's no reliable way
+to detect a submission *inside* a cross-origin Google Forms iframe from the parent page).
 
 ### Consultation booking
+
+Three priced tiers now live above the booking calendar (20-min / R150, 30-min / R250,
+60-min / R450 — edit these anytime in `src/lib/consultations.ts`). Each "Book
+Consultation" button scrolls down to the same shared calendar embed below.
 
 1. In Google Calendar, click **Create → Appointment schedule**.
 2. Set your available hours and appointment duration. Worth adding a custom question or
@@ -125,12 +151,21 @@ third-party service, no code changes needed once they're set up.
    reminders sync straight to your Google Calendar and email you automatically — again,
    native Calendar behavior.
 
+### Payment — prepared, not active
+
+No payment processor is wired up anywhere on the site yet, by design (see
+`src/lib/payments.ts` for the reasoning and the intended future flow). The consultation
+page shows prices and says plainly that online payment isn't enabled yet — booking a
+slot reserves the time, payment gets arranged directly once details are confirmed. When
+you're ready to add a real processor (PayFast, Yoco, Paystack), that file is the one
+place designed to wire it into.
+
 ### If the embed looks cramped or cut off
 
-Both iframes use a fixed height (`Contact.tsx` / `ConsultationForm.tsx`) since Google
-doesn't expose a way to auto-size an embedded form/calendar to its content. If your real
-form ends up with more or fewer fields than expected, just adjust the `height="760"` (or
-`"700"`) prop in the relevant component.
+The iframes use a fixed height since Google doesn't expose a way to auto-size an
+embedded form/calendar to its content. If a form ends up with more or fewer fields than
+expected, just adjust the `height="..."` prop in the relevant component
+(`Contact.tsx`/`QuoteForm.tsx`/`ConsultationForm.tsx`).
 
 ## Dark mode
 

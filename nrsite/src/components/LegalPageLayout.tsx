@@ -33,7 +33,7 @@ export default function LegalPageLayout({
               Legal overview page
             </Link>
             , or{" "}
-            <a href="mailto:ubabalorixana02@gmail.com" className="text-roseText underline underline-offset-2">
+            <a href="mailto:nolubabalo@nraisolutions.co.za" className="text-roseText underline underline-offset-2">
               email me directly
             </a>
             .

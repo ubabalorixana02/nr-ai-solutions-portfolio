@@ -103,7 +103,7 @@ export default function AccessibilityStatement() {
           If you experience any accessibility barrier on this site, please let me know —
           specific feedback (what page, what happened, what device/assistive technology
           you were using) helps enormously in fixing it quickly. Contact{" "}
-          <a href="mailto:ubabalorixana02@gmail.com">ubabalorixana02@gmail.com</a>.
+          <a href="mailto:nolubabalo@nraisolutions.co.za">nolubabalo@nraisolutions.co.za</a>.
         </p>
       </section>
     </LegalPageLayout>

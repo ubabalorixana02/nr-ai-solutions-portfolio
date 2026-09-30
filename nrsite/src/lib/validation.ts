@@ -4,14 +4,7 @@ import { z } from "zod";
 // Forms / Google Calendar (see Contact.tsx and ConsultationForm.tsx) rather
 // than a custom API route, so those two schemas were removed. Testimonials
 // still go through our own Sanity-backed API route, so that one stays.
-
-export const consultationOptions = [
-  "30 Minute Discovery Call",
-  "60 Minute Business Consultation",
-  "Project Consultation",
-  "Website Consultation",
-  "Workflow Review",
-] as const;
+// Consultation pricing tiers live in lib/consultations.ts.
 
 export const testimonialFormSchema = z.object({
   clientName: z.string().trim().min(1, "Name is required").max(120),

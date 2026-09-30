@@ -1,3 +1,4 @@
+import { Award } from "lucide-react";
 import { certificates } from "@/lib/documents";
 import PdfLinkButton from "./PdfLinkButton";
 import Reveal from "./Reveal";
@@ -9,9 +10,9 @@ export default function Certifications() {
   return (
     <section id="certifications" className="bg-surface px-6 py-24 md:px-12">
       <Reveal>
-        <p className="section-tag">Qualifications</p>
+        <p className="section-tag">Credentials</p>
         <h2 className="section-title">
-          My <em>Certifications</em>
+          Professional <em>Development</em>
         </h2>
         <div className="divider" />
       </Reveal>
@@ -20,7 +21,7 @@ export default function Certifications() {
         {[...featured, ...rest].map((c, i) => (
           <Reveal key={c.name} delay={Math.min(i * 0.03, 0.3)} className="card flex items-center justify-between gap-3 px-5 py-4">
             <div className="flex items-center gap-3">
-              <span className="text-xl" aria-hidden="true">🏅</span>
+              <Award size={18} className="shrink-0 text-rose" aria-hidden="true" />
               <div>
                 <p className="text-sm font-medium text-heading">{c.name}</p>
                 <p className="text-xs text-mid">{c.issuer}</p>

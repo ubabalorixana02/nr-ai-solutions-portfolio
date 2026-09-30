@@ -5,7 +5,7 @@ export type Project = {
   emoji: string;
   /** Real screenshot, shown instead of the emoji/gradient placeholder when set. */
   image?: string;
-  status: "Live" | "Concept";
+  status: "Live" | "Concept" | "Demo";
   summary: string;
   tags: string[];
   liveUrl?: string;
@@ -28,15 +28,15 @@ export const projects: Project[] = [
     category: "AI Receptionist",
     emoji: "🤖",
     image: "/projects/clementia.jpg",
-    status: "Live",
+    status: "Demo",
     liveUrl: "https://nolubabalorixana.app.n8n.cloud/webhook/khanyo-booking",
     summary:
-      "An AI-powered receptionist that handles appointment requests, checks availability, suggests alternatives and sends confirmations automatically — currently powering booking for Khanyo Dental Clinic.",
+      "AI receptionist and booking workflow demonstration built to show how conversational automation could support appointment enquiries and booking workflows.",
     tags: ["n8n", "Google Gemini", "Automation"],
     challenge:
       "Businesses spend significant time manually answering customer enquiries and scheduling appointments.",
     solution:
-      "Developed an AI-powered receptionist capable of handling appointment requests, checking availability, suggesting alternatives and sending confirmations. It's live behind the Book Online flow on Khanyo Dental Clinic's website.",
+      "Developed an AI-powered receptionist capable of handling appointment requests, checking availability, suggesting alternatives and sending confirmations — built and tested as a demonstration using a dental-clinic booking scenario, not deployed for a live client.",
     technologies: ["n8n", "Google Gemini", "Google Calendar", "Google Sheets", "Gmail", "Automation"],
     features: [
       "Automated appointment booking",

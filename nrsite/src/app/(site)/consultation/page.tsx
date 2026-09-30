@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ConsultationForm from "@/components/ConsultationForm";
 import { SITE_URL } from "@/lib/site";
+import { getExchangeRates } from "@/lib/exchangeRates";
 
 export const metadata: Metadata = {
   title: "Book a Consultation",
@@ -9,7 +10,12 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/consultation` },
 };
 
-export default function ConsultationPage() {
+export default async function ConsultationPage() {
+  // Fetched server-side so no exchange-rate request (or any related
+  // credential, if one's ever added) ever reaches the client. Falls back to
+  // `null` on failure — ConsultationForm renders ZAR-only in that case.
+  const rates = await getExchangeRates();
+
   return (
     <main id="main-content" className="px-6 py-20 md:px-12">
       <div className="mx-auto max-w-5xl">
@@ -23,7 +29,7 @@ export default function ConsultationPage() {
           HR assistance, lead generation or website assistance, let&apos;s connect.
         </p>
 
-        <ConsultationForm />
+        <ConsultationForm rates={rates} />
       </div>
     </main>
   );

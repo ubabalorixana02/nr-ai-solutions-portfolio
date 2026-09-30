@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Cormorant_Garamond, Jost } from "next/font/google";
 import PersonJsonLd from "@/components/PersonJsonLd";
 import ThemeScript from "@/components/ThemeScript";
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, SITE_ROLES } from "@/lib/site";
+import { SITE_URL, SITE_DESCRIPTION, SITE_ROLES, COMPANY_NAME, COMPANY_TAGLINE } from "@/lib/site";
 
 // Deliberately NOT importing ./globals.css here — it's imported in
 // (site)/layout.tsx instead, so Tailwind's base/reset styles don't leak
@@ -23,14 +23,16 @@ const jost = Jost({
   display: "swap",
 });
 
-const titleLine = `${SITE_NAME} | ${SITE_ROLES.slice(0, 2).join(" & ")}`;
+const titleLine = `${COMPANY_NAME} | ${COMPANY_TAGLINE}`;
 
 export const metadata: Metadata = {
   title: {
     default: titleLine,
-    // Lets child pages set just their own title and inherit "| Nolubabalo Rixana"
-    // automatically, instead of every page re-typing the full suffix.
-    template: `%s | ${SITE_NAME}`,
+    // Company name as the suffix for every child page's title — not the
+    // founder's personal name — now that the company is the primary site
+    // identity (Phase 4A.1). Child pages still just set their own title
+    // and inherit "| NR AI Solutions" automatically.
+    template: `%s | ${COMPANY_NAME}`,
   },
   description: SITE_DESCRIPTION,
   metadataBase: new URL(SITE_URL),
@@ -46,7 +48,7 @@ export const metadata: Metadata = {
     title: titleLine,
     description: SITE_DESCRIPTION,
     url: SITE_URL,
-    siteName: SITE_NAME,
+    siteName: COMPANY_NAME,
     type: "website",
     locale: "en_ZA",
   },

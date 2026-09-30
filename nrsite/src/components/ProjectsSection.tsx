@@ -8,15 +8,14 @@ export default function ProjectsSection() {
   return (
     <section id="projects" className="px-6 py-24 md:px-12">
       <Reveal>
-        <p className="section-tag">My Work</p>
+        <p className="section-tag">Selected Work</p>
         <h2 className="section-title">
           Featured <em>Projects</em>
         </h2>
         <div className="divider" />
         <p className="max-w-xl text-[0.92rem] leading-relaxed text-mid">
-          A selection of AI-powered tools and platforms I&apos;ve designed — each one built to show how
-          administrative support, customer service and productivity can be enhanced with modern
-          automation.
+          A selection of AI-powered tools and workflow demonstrations showing how NR AI
+          Solutions approaches administration, customer support and productivity.
         </p>
       </Reveal>
 

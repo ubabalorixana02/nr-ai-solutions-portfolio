@@ -1,41 +1,96 @@
-import { Briefcase, ClipboardList, Headphones, Users, TrendingUp, Sparkles, Workflow, Globe, FileText } from "lucide-react";
+import Link from "next/link";
+import { ClipboardList, Headphones, Users, Sparkles } from "lucide-react";
 import Reveal from "./Reveal";
 
-const services = [
-  { title: "Executive Assistance", desc: "Calendar, inbox, travel and reporting support.", icon: Briefcase },
-  { title: "Administrative Support", desc: "Formatting, data entry and office administration.", icon: ClipboardList },
-  { title: "Customer Support", desc: "Email, live chat, CRM and ticket management.", icon: Headphones },
-  { title: "HR Assistance", desc: "Interview scheduling, ATS and employee records.", icon: Users },
-  { title: "Lead Generation", desc: "LinkedIn prospecting, B2B research and contact lists.", icon: TrendingUp },
-  { title: "AI Productivity", desc: "Prompt engineering, workflow planning and AI adoption.", icon: Sparkles },
-  { title: "Workflow Automation", desc: "Business process and email/task automation with n8n.", icon: Workflow },
-  { title: "Wix Website Support", desc: "Landing pages, CMS updates and maintenance.", icon: Globe },
-  { title: "Resume & LinkedIn Optimisation", desc: "ATS optimisation and cover letters.", icon: FileText },
+// The four primary business pillars (approved Phase 4B positioning).
+// `supporting` is a short, representative list — not exhaustive — kept
+// brief so four cards stay visually balanced rather than becoming a wall
+// of text.
+const pillars = [
+  {
+    number: "01",
+    title: "Administrative & Operations Support",
+    desc: "Reliable support behind the scenes.",
+    supporting: "Executive assistance, calendar & inbox support, documentation, records management.",
+    icon: ClipboardList,
+  },
+  {
+    number: "02",
+    title: "Customer Support",
+    desc: "Professional communication that keeps customers informed and cared for.",
+    supporting: "Customer email support, inbox management, follow-up coordination.",
+    icon: Headphones,
+  },
+  {
+    number: "03",
+    title: "Recruitment & Talent Support",
+    desc: "A smoother journey from vacancy to onboarding.",
+    supporting: "Candidate sourcing, CV screening, interview scheduling, ATS administration.",
+    icon: Users,
+    href: "/recruitment",
+  },
+  {
+    number: "04",
+    title: "Automation & AI Solutions",
+    desc: "Less repetitive work. More room to grow.",
+    supporting: "Workflow automation, AI-assisted processes, practical AI implementation.",
+    icon: Sparkles,
+  },
 ];
+
+// Legacy/adjacent services — kept available, deliberately de-emphasized so
+// they no longer compete visually with the four primary pillars above.
+// No routes or functionality depend on these labels (confirmed: none of
+// the service cards link anywhere except the CTA below), so nothing is
+// being removed — just re-weighted.
+const alsoAvailable = ["Lead Generation", "Wix Website Support", "Resume & LinkedIn Optimisation"];
 
 export default function Services() {
   return (
     <section id="services" className="bg-surface px-6 py-24 md:px-12">
       <Reveal>
-        <p className="section-tag">What I Offer</p>
-        <h2 className="section-title">
-          My <em>Services</em>
-        </h2>
+        <p className="section-tag">Our Services</p>
+        <h2 className="section-title">Services</h2>
         <div className="divider" />
       </Reveal>
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {services.map((s, i) => (
+      <div className="grid gap-5 sm:grid-cols-2">
+        {pillars.map((s, i) => (
           <Reveal key={s.title} delay={Math.min(i * 0.05, 0.35)} className="card card-glow group px-6 py-7">
-            <s.icon
-              size={26}
-              className="text-rose transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:scale-110"
-              aria-hidden="true"
-            />
+            <div className="flex items-center gap-3">
+              <span className="font-display text-sm text-roseText/70" aria-hidden="true">{s.number}</span>
+              <s.icon
+                size={26}
+                className="text-rose transition-transform duration-300 ease-out group-hover:-translate-y-0.5 group-hover:scale-110"
+                aria-hidden="true"
+              />
+            </div>
             <h3 className="mt-3 font-display text-xl text-heading">{s.title}</h3>
             <p className="mt-2 text-sm leading-relaxed text-mid">{s.desc}</p>
+            <p className="mt-3 text-xs leading-relaxed text-mid/70">{s.supporting}</p>
+            {"href" in s && s.href && (
+              <Link href={s.href} className="mt-3 inline-block text-xs font-medium text-roseText hover:underline">
+                Learn more →
+              </Link>
+            )}
           </Reveal>
         ))}
       </div>
+
+      <Reveal>
+        <p className="mx-auto mt-6 max-w-2xl text-center text-xs text-mid/70">
+          Also available: {alsoAvailable.join(" · ")}
+        </p>
+      </Reveal>
+
+      <Reveal>
+        <div className="card card-glow mx-auto mt-8 flex max-w-2xl flex-col items-center gap-3 px-8 py-8 text-center">
+          <p className="font-display text-xl text-heading">Ready to get started?</p>
+          <p className="max-w-md text-sm text-mid">
+            Tell us a bit about your project and we&apos;ll prepare a tailored quotation.
+          </p>
+          <Link href="/quote" className="btn-solid mt-1">Request a Quote</Link>
+        </div>
+      </Reveal>
     </section>
   );
 }

@@ -160,7 +160,7 @@ export default function Terms() {
         <h2>14. Contact Information</h2>
         <p>
           Questions about these terms can be directed to{" "}
-          <a href="mailto:ubabalorixana02@gmail.com">ubabalorixana02@gmail.com</a>.
+          <a href="mailto:nolubabalo@nraisolutions.co.za">nolubabalo@nraisolutions.co.za</a>.
         </p>
       </section>
     </LegalPageLayout>

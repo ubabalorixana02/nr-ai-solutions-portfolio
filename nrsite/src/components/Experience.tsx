@@ -1,6 +1,12 @@
 import Reveal from "./Reveal";
-import AnimatedStat from "./AnimatedStat";
 
+// Same factual roles/dates/responsibilities as before — nothing invented,
+// nothing removed. Presentation changed from a CV-style vertical timeline
+// with connecting dots to plain stacked cards, consistent with how the
+// rest of the site (Services, Certifications, Technology & Platforms)
+// already presents grouped items. The personal stat cards previously shown
+// alongside this timeline have been removed per Phase 5D — that data isn't
+// company-level and isn't reproduced elsewhere.
 const timeline = [
   {
     role: "Administrative Assistant",
@@ -34,45 +40,33 @@ const timeline = [
   },
 ];
 
-const stats = [
-  { value: "5+", label: "AI Applications Built" },
-  { value: "20+", label: "Professional Certifications" },
-  { value: "10+", label: "Digital Platforms" },
-  { value: "100%", label: "Remote Ready" },
-];
-
 export default function Experience() {
   return (
     <section id="experience" className="px-6 py-24 md:px-12">
-      <p className="section-tag">Career Journey</p>
-      <h2 className="section-title">
-        Experience & <em>Why Work With Me</em>
-      </h2>
+      <p className="section-tag">Founder Experience</p>
+      <h2 className="section-title">Experience Behind the Work</h2>
       <div className="divider" />
 
-      <div className="grid gap-8 md:grid-cols-[1.3fr_1fr]">
-        <ol className="space-y-6 border-l-2 border-rosePale pl-6">
-          {timeline.map((t, i) => (
-            <Reveal key={t.role} as="li" delay={i * 0.08} className="relative">
-              <span className="absolute -left-[31px] top-1 h-3 w-3 rounded-full bg-rose" />
-              <p className="text-xs uppercase tracking-wider text-roseText">{t.period}</p>
-              <h3 className="font-display text-xl text-heading">{t.role}</h3>
-              <p className="text-sm font-medium text-mid">{t.org}</p>
-              <ul className="mt-2 space-y-1 text-sm text-mid">
-                {t.points.map((p) => (
-                  <li key={p}>• {p}</li>
-                ))}
-              </ul>
-            </Reveal>
-          ))}
-        </ol>
+      <p className="mb-8 max-w-2xl text-sm leading-relaxed text-mid">
+        NR AI Solutions is founder-led, built on practical, hands-on experience across
+        administration, customer support, digital services and related professional work —
+        the same foundation the business draws on today.
+      </p>
 
-        <div className="grid grid-cols-2 gap-4">
-          {stats.map((s) => (
-            <AnimatedStat key={s.label} value={s.value} label={s.label} />
-          ))}
-        </div>
-      </div>
+      <ol className="mx-auto max-w-3xl space-y-5">
+        {timeline.map((t, i) => (
+          <Reveal key={t.role} as="li" delay={i * 0.08} className="card px-6 py-6">
+            <p className="text-xs uppercase tracking-wider text-roseText">{t.period}</p>
+            <h3 className="font-display text-xl text-heading">{t.role}</h3>
+            <p className="text-sm font-medium text-mid">{t.org}</p>
+            <ul className="mt-2 space-y-1 text-sm text-mid">
+              {t.points.map((p) => (
+                <li key={p}>• {p}</li>
+              ))}
+            </ul>
+          </Reveal>
+        ))}
+      </ol>
     </section>
   );
 }

@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import ThemeToggle from "./ThemeToggle";
 import logoMark from "../../public/brand/logo-mark.png";
+import { COMPANY_NAME } from "@/lib/site";
 
 const links = [
   { href: "/#about", label: "About", hash: "about" },
@@ -17,6 +18,7 @@ const links = [
   { href: "/#certifications", label: "Certifications", hash: "certifications" },
   { href: "/blog", label: "Journal" },
   { href: "/consultation", label: "Consultation" },
+  { href: "/quote", label: "Get a Quote" },
   { href: "/resources", label: "Resources" },
   { href: "/#contact", label: "Contact", hash: "contact" },
 ];
@@ -82,7 +84,7 @@ export default function Navbar() {
         scrolled ? "shadow-[0_2px_20px_rgba(22,58,112,0.08)]" : ""
       }`}
     >
-      <Link href="/" className="flex items-center" aria-label="Nolubabalo Rixana — Home">
+      <Link href="/" className="flex items-center" aria-label={`${COMPANY_NAME} — Home`}>
         <motion.span
           className="flex h-11 w-11 items-center justify-center rounded-full bg-[#FFF9F6]"
           initial={shouldReduceMotion ? undefined : { opacity: 0, scale: 0.8 }}

@@ -3,14 +3,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts } from "@/lib/blog";
 import { urlForImage } from "@/sanity/lib/image";
-import { SITE_URL } from "@/lib/site";
+import { SITE_URL, COMPANY_NAME } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "The Productivity Journal",
   description: "Notes on AI, virtual assistance, automation and running an efficient business.",
   alternates: { canonical: `${SITE_URL}/blog` },
   openGraph: {
-    title: "The Productivity Journal | Nolubabalo Rixana",
+    title: `The Productivity Journal | ${COMPANY_NAME}`,
     description: "Notes on AI, virtual assistance, automation and running an efficient business.",
     url: `${SITE_URL}/blog`,
   },

@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Reveal from "./Reveal";
 import logoMark from "../../public/brand/logo-mark.png";
-import { SITE_ROLES } from "@/lib/site";
+import { COMPANY_NAME, COMPANY_TAGLINE, FOUNDER_NAME, FOUNDER_TITLE } from "@/lib/site";
 
 export default function Footer() {
   return (
@@ -29,10 +29,16 @@ export default function Footer() {
                 <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-[#FFF9F6]">
                   <Image src={logoMark} alt="" className="h-8 w-8 object-contain" />
                 </span>
-                <p className="font-display text-2xl text-white">Nolubabalo Rixana</p>
+                <div>
+                  <p className="font-display text-2xl text-white">{COMPANY_NAME}</p>
+                  <p className="text-xs uppercase tracking-wide text-blushPale/70">{COMPANY_TAGLINE}</p>
+                </div>
               </div>
-              <p className="mt-2 text-sm text-blushPale/80">
-                {SITE_ROLES.slice(0, 2).join(" · ")}
+              <p className="mt-3 text-sm text-blushPale/80">
+                Administrative support. Customer experience. Recruitment coordination. Smarter workflows.
+              </p>
+              <p className="mt-3 text-xs text-blushPale/60">
+                {FOUNDER_NAME} · {FOUNDER_TITLE}
               </p>
             </div>
             <div>
@@ -40,6 +46,7 @@ export default function Footer() {
               <ul className="mt-3 space-y-2 text-sm">
                 <li><Link href="/projects" className="hover:text-white">Projects</Link></li>
                 <li><Link href="/blog" className="hover:text-white">The Productivity Journal</Link></li>
+                <li><Link href="/quote" className="hover:text-white">Request a Quote</Link></li>
                 <li><Link href="/consultation" className="hover:text-white">Book a Consultation</Link></li>
                 <li><Link href="/resources" className="hover:text-white">Resources</Link></li>
                 <li><Link href="/faq" className="hover:text-white">FAQ</Link></li>
@@ -52,12 +59,15 @@ export default function Footer() {
                 <li><Link href="/privacy-policy" className="hover:text-white">Privacy Policy</Link></li>
                 <li><Link href="/terms" className="hover:text-white">Terms of Service</Link></li>
                 <li><Link href="/cookie-policy" className="hover:text-white">Cookie Policy</Link></li>
+                <li><Link href="/disclaimer" className="hover:text-white">Disclaimer</Link></li>
+                <li><Link href="/accessibility" className="hover:text-white">Accessibility Statement</Link></li>
+                <li><Link href="/data-request" className="hover:text-white">Data Request</Link></li>
                 <li><Link href="/legal" className="hover:text-white">All Policies</Link></li>
               </ul>
             </div>
           </div>
           <div className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-xs text-white/60 sm:flex-row">
-            <p>© {new Date().getFullYear()} Nolubabalo Rixana. All rights reserved.</p>
+            <p>© {new Date().getFullYear()} {COMPANY_NAME}. All rights reserved.</p>
             <a href="#home" className="hover:text-white">Back to Top ↑</a>
           </div>
         </Reveal>
