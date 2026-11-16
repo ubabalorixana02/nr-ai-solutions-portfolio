@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import ConsultationForm from "@/components/ConsultationForm";
 import { SITE_URL } from "@/lib/site";
-import { getExchangeRates } from "@/lib/exchangeRates";
 
 export const metadata: Metadata = {
   title: "Book a Consultation",
@@ -10,11 +10,17 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/consultation` },
 };
 
-export default async function ConsultationPage() {
-  // Fetched server-side so no exchange-rate request (or any related
-  // credential, if one's ever added) ever reaches the client. Falls back to
-  // `null` on failure — ConsultationForm renders ZAR-only in that case.
-  const rates = await getExchangeRates();
+export default function ConsultationPage() {
+  // Vercel supplies this header based on the visitor's IP location.
+  // If unavailable or invalid, default to South Africa; visitors can
+  // always change their pricing region using the selector.
+  const country = headers().get("x-vercel-ip-country")?.toUpperCase();
+  const initialRegion =
+    country === "ZA"
+      ? "ZA"
+      : country && /^[A-Z]{2}$/.test(country)
+        ? "INTL"
+        : "ZA";
 
   return (
     <main id="main-content" className="px-6 py-20 md:px-12">
@@ -29,7 +35,7 @@ export default async function ConsultationPage() {
           HR assistance, lead generation or website assistance, let&apos;s connect.
         </p>
 
-        <ConsultationForm rates={rates} />
+        <ConsultationForm initialRegion={initialRegion} />
       </div>
     </main>
   );

@@ -1,87 +1,107 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CalendarDays, Mail, Info } from "lucide-react";
 import { consultationTiers } from "@/lib/consultations";
 import { PAYMENTS_ENABLED } from "@/lib/payments";
 import { COMPANY_NAME } from "@/lib/site";
-import {
-  SUPPORTED_CURRENCIES,
-  formatCurrency,
-  convertFromZAR,
-  type CurrencyCode,
-  type ExchangeRates,
-} from "@/lib/currency";
+import { formatCurrency } from "@/lib/currency";
 import Reveal from "./Reveal";
 
-// Set after creating a Google Calendar "Appointment schedule" — see README
-// "Contact & Consultation setup" for exact steps. Public/shareable link, so
-// NEXT_PUBLIC_ is correct here (not a secret).
 const CALENDAR_BOOKING_URL = process.env.NEXT_PUBLIC_GOOGLE_CALENDAR_BOOKING_URL;
 
+type PricingRegion = "ZA" | "INTL";
+
 type ConsultationFormProps = {
-  // Server-fetched ZAR-based exchange rates (see src/lib/exchangeRates.ts),
-  // or null if the fetch failed/was unavailable. ZAR display never depends
-  // on this — it's only used for the optional converted estimate.
-  rates: ExchangeRates | null;
+  initialRegion: PricingRegion;
 };
 
-export default function ConsultationForm({ rates }: ConsultationFormProps) {
-  // Display currency only — purely cosmetic. The canonical price is always
-  // ZAR (see src/lib/consultations.ts); this never changes what's charged.
-  const [currency, setCurrency] = useState<CurrencyCode>("ZAR");
+const REGION_STORAGE_KEY = "nr-ai-consultation-region";
+
+export default function ConsultationForm({
+  initialRegion,
+}: ConsultationFormProps) {
+  const [region, setRegion] = useState<PricingRegion>(initialRegion);
+
+  // Restore a visitor's previous manual region choice after the page loads.
+  useEffect(() => {
+    try {
+      const savedRegion = window.localStorage.getItem(REGION_STORAGE_KEY);
+      if (savedRegion === "ZA" || savedRegion === "INTL") {
+        setRegion(savedRegion);
+      }
+    } catch {
+      // If browser storage is unavailable, use the automatically detected region.
+    }
+  }, []);
+
+  const handleRegionChange = (nextRegion: PricingRegion) => {
+    setRegion(nextRegion);
+    try {
+      window.localStorage.setItem(REGION_STORAGE_KEY, nextRegion);
+    } catch {
+      // The selector still works for this visit if browser storage is unavailable.
+    }
+  };
 
   const scrollToBooking = () => {
-    document.getElementById("consultation-booking")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    document.getElementById("consultation-booking")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
   };
 
   return (
     <>
       <Reveal>
-        {currency !== "ZAR" || rates ? (
-          <div className="mx-auto mb-6 flex max-w-xs flex-col items-center gap-1.5 text-center sm:max-w-none sm:flex-row sm:justify-center">
-            <label htmlFor="consultation-currency" className="text-xs font-medium text-mid">
-              Display prices in
-            </label>
-            <select
-              id="consultation-currency"
-              value={currency}
-              onChange={(e) => setCurrency(e.target.value as CurrencyCode)}
-              className="rounded-full border border-rosePale bg-card px-3 py-1.5 text-xs text-heading focus:outline-none focus:ring-2 focus:ring-roseDeep sm:ml-1"
-            >
-              {SUPPORTED_CURRENCIES.map((code) => (
-                <option key={code} value={code}>
-                  {code}
-                </option>
-              ))}
-            </select>
-          </div>
-        ) : null}
+        <div className="mx-auto mb-6 flex max-w-xs flex-col items-center gap-1.5 text-center sm:max-w-none sm:flex-row sm:justify-center">
+          <label
+            htmlFor="consultation-region"
+            className="text-xs font-medium text-mid"
+          >
+            Pricing region
+          </label>
+          <select
+            id="consultation-region"
+            value={region}
+            onChange={(event) =>
+              handleRegionChange(event.target.value as PricingRegion)
+            }
+            className="rounded-full border border-rosePale bg-card px-3 py-1.5 text-xs text-heading focus:outline-none focus:ring-2 focus:ring-roseDeep sm:ml-1"
+          >
+            <option value="ZA">South Africa (ZAR)</option>
+            <option value="INTL">International (USD)</option>
+          </select>
+        </div>
 
         <div className="mb-6 grid gap-5 sm:grid-cols-3">
           {consultationTiers.map((tier) => {
-            const converted = currency === "ZAR" ? null : convertFromZAR(tier.priceZAR, currency, rates);
+            const price =
+              region === "ZA"
+                ? formatCurrency(tier.priceZAR, "ZAR")
+                : formatCurrency(tier.priceUSD, "USD");
+
             return (
-              <div key={tier.slug} className="card flex flex-col gap-3 px-5 py-6 text-left">
-                <CalendarDays size={20} className="text-rose" aria-hidden="true" />
+              <div
+                key={tier.slug}
+                className="card flex flex-col gap-3 px-5 py-6 text-left"
+              >
+                <CalendarDays
+                  size={20}
+                  className="text-rose"
+                  aria-hidden="true"
+                />
                 <div>
-                  <span className="font-display text-lg text-heading">{tier.label}</span>
+                  <span className="font-display text-lg text-heading">
+                    {tier.label}
+                  </span>
                   <p className="mt-1 font-display text-2xl text-roseText">
-                    {formatCurrency(tier.priceZAR, "ZAR")}
+                    {price}
                   </p>
-                  {currency !== "ZAR" &&
-                    (converted !== null ? (
-                      <p className="mt-0.5 text-xs text-mid">
-                        ≈ {formatCurrency(converted, currency)}{" "}
-                        <span className="italic">(estimated)</span>
-                      </p>
-                    ) : (
-                      <p className="mt-0.5 text-xs text-mid">
-                        Conversion unavailable right now — price shown in ZAR
-                      </p>
-                    ))}
                 </div>
-                <p className="flex-1 text-xs leading-relaxed text-mid">{tier.description}</p>
+                <p className="flex-1 text-xs leading-relaxed text-mid">
+                  {tier.description}
+                </p>
                 <button
                   type="button"
                   onClick={scrollToBooking}
@@ -95,17 +115,17 @@ export default function ConsultationForm({ rates }: ConsultationFormProps) {
         </div>
 
         <p className="mx-auto mb-10 flex max-w-xl items-start gap-2 rounded-xl bg-rosePale px-4 py-3 text-xs leading-relaxed text-roseText">
-          <Info size={15} className="mt-0.5 shrink-0" aria-hidden="true" />
-          Consultation fees are separate from project or service fees. Booking a consultation
-          does not automatically include implementation work — any project work is scoped and
-          quoted separately after we've spoken.
-          {currency !== "ZAR" && (
-            <>
-              {" "}
-              All fees are billed in South African Rand (ZAR); other currencies shown are
-              estimated conversions for reference only, not a guaranteed amount.
-            </>
-          )}
+          <Info
+            size={15}
+            className="mt-0.5 shrink-0"
+            aria-hidden="true"
+          />
+          Consultation fees are separate from project or service fees. Booking
+          a consultation does not automatically include implementation work —
+          any project work is scoped and quoted separately after we&apos;ve
+          spoken. The displayed price is based on your selected pricing region.
+          Your consultation currency and fee will be confirmed when arranging
+          your booking.
         </p>
       </Reveal>
 
@@ -125,14 +145,23 @@ export default function ConsultationForm({ rates }: ConsultationFormProps) {
             </div>
           ) : (
             <div className="card mx-auto flex max-w-xl flex-col items-center gap-3 px-8 py-16 text-center">
-              <CalendarDays size={28} className="text-rose" aria-hidden="true" />
-              <p className="font-display text-xl text-heading">Online booking coming soon</p>
-              <p className="text-sm text-mid">
-                Prefer to arrange a time directly? Contact {COMPANY_NAME} and we&apos;ll
-                coordinate a suitable consultation time — let us know which consultation tier
-                you&apos;re after.
+              <CalendarDays
+                size={28}
+                className="text-rose"
+                aria-hidden="true"
+              />
+              <p className="font-display text-xl text-heading">
+                Online booking coming soon
               </p>
-              <a href="mailto:nolubabalo@nraisolutions.co.za" className="btn-solid mt-2">
+              <p className="text-sm text-mid">
+                Prefer to arrange a time directly? Contact {COMPANY_NAME} and
+                we&apos;ll coordinate a suitable consultation time — let us know
+                which consultation tier you&apos;re after.
+              </p>
+              <a
+                href="mailto:nolubabalo@nraisolutions.co.za"
+                className="btn-solid mt-2"
+              >
                 <Mail size={16} aria-hidden="true" /> Email {COMPANY_NAME}
               </a>
             </div>
@@ -140,8 +169,9 @@ export default function ConsultationForm({ rates }: ConsultationFormProps) {
         </div>
         {!PAYMENTS_ENABLED && (
           <p className="mx-auto mt-4 max-w-xl text-center text-[0.7rem] text-mid">
-            Online payment isn&apos;t enabled yet — booking a slot above reserves your time, and
-            payment is arranged directly once we confirm the details.
+            Online payment isn&apos;t enabled yet — booking a slot above
+            reserves your time, and payment is arranged directly once we
+            confirm the details.
           </p>
         )}
       </Reveal>
