@@ -101,7 +101,8 @@ export default function RecruitmentPage() {
             offers, and employment relationships remain with your business throughout.
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4">
-            <Link href="/consultation" className="btn-solid">Work With Us</Link>
+            <Link href="/start-hiring" className="btn-solid">Start Hiring</Link>
+            <Link href="/consultation" className="btn-ghost">Work With Us</Link>
             <Link href="/quote" className="btn-ghost">Request a Quote</Link>
           </div>
         </Reveal>
@@ -204,7 +205,8 @@ export default function RecruitmentPage() {
               Solutions can support your team.
             </p>
             <div className="mt-1 flex flex-wrap items-center justify-center gap-4">
-              <Link href="/consultation" className="btn-solid">Work With Us</Link>
+              <Link href="/start-hiring" className="btn-solid">Start Hiring</Link>
+              <Link href="/consultation" className="btn-ghost">Work With Us</Link>
               <Link href="/quote" className="btn-ghost">Request a Quote</Link>
             </div>
           </div>
