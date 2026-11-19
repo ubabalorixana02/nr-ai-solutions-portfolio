@@ -12,16 +12,17 @@ const founderQuote =
 
 const paragraphs = [
   "NR AI Solutions helps growing businesses stay organised, responsive and efficient — combining administrative and operations support, customer support, recruitment coordination and practical automation into one dependable service.",
-  "I hold a Bachelor of Arts in Government, Administration and Development from the University of South Africa (UNISA), and I continuously invest in expanding my knowledge through professional certifications in customer service, virtual assistance, workplace safety, Microsoft technologies, and AI productivity.",
-  "What sets me apart is my curiosity and willingness to learn. I enjoy exploring emerging technologies, experimenting with automation tools, and turning ideas into practical solutions. Every project I work on is approached with professionalism, creativity, and a commitment to delivering meaningful results.",
+  "I am currently completing a Bachelor of Arts in Government, Administration and Development at the University of South Africa (UNISA), with majors in Administration and Development. I continue to strengthen my professional capabilities through training and certifications in Talent Acquisition, customer service, virtual assistance, workplace safety, Microsoft technologies and AI productivity.",
+  "My experience spans administrative support, customer communication, correspondence, documentation and operational coordination. I enjoy identifying practical ways to improve workflows, using technology thoughtfully and ensuring that important tasks are handled with care, accuracy and professionalism.",
   "Outside of work, I enjoy nature, lifelong learning, and discovering new ways technology can empower people and businesses. I believe great systems create more time for what matters most—and that's exactly what I strive to build for every client.",
 ];
 
 const highlights = [
   "Executive & Administrative Support",
+  "Talent Acquisition",
   "Customer Support & CRM Systems",
   "AI Productivity & Prompt Engineering",
-  "Google AI Essentials · CAPACITI AI Skills Programme",
+  "Google AI Essentials · AI Productivity & Responsible AI Training",
   "Continuous Learning & Attention to Detail",
   "Workflow Improvement & Problem Solving",
 ];

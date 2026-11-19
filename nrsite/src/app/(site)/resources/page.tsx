@@ -1,41 +1,26 @@
 import type { Metadata } from "next";
-import { resumes, certificates } from "@/lib/documents";
+import { certificates } from "@/lib/documents";
 import PdfLinkButton from "@/components/PdfLinkButton";
 import { SITE_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Resources",
-  description: "Download centre for resume and certificates — view-only PDF access.",
+  title: "Certificates & Training",
+  description: "Professional training, certifications and learning resources.",
   alternates: { canonical: `${SITE_URL}/resources` },
 };
 
 export default function ResourcesPage() {
   return (
     <main id="main-content" className="px-6 py-20 md:px-12">
-      <p className="section-tag">Download Centre</p>
-      <h1 className="section-title">Resources</h1>
+      <p className="section-tag">Professional Resources</p>
+      <h1 className="section-title">Certificates & Training</h1>
       <div className="divider" />
       <p className="mb-10 max-w-xl text-sm text-mid">
-        All documents open in a secure, view-only viewer — perfect for a quick review before
-        reaching out.
+        Explore selected professional certifications and training completed
+        to support our administrative, customer service, recruitment and
+        technology services.
       </p>
 
-      <h2 className="mb-4 font-display text-2xl text-heading">Resume</h2>
-      <div className="mb-12 flex flex-wrap gap-4">
-        {resumes.map((r) => (
-          <PdfLinkButton
-            key={r.file}
-            file={r.file}
-            name={r.name}
-            ariaLabel={r.label}
-            className="btn-ghost"
-          >
-            📄 {r.label}
-          </PdfLinkButton>
-        ))}
-      </div>
-
-      <h2 className="mb-4 font-display text-2xl text-heading">Certificates</h2>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {certificates.map((c) => (
           <div key={c.name} className="card flex items-center justify-between gap-3 px-5 py-4">
